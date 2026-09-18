@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title></title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#02020b;
+  touch-action:none;
+}
+
+body{
+  position:relative;
+  background:
+    radial-gradient(circle at 50% 45%,#18051d 0%,#080313 35%,#02020b 75%);
+}
+
+/* AY */
+.moon{
+  position:absolute;
+  width:90px;
+  height:90px;
+  border-radius:50%;
+  left:50%;
+  top:16%;
+  transform:translateX(-50%);
+  background:radial-gradient(circle at 35% 30%,#fff,#ffe9ef 45%,#d9a8b7);
+  box-shadow:
+    0 0 25px #fff,
+    0 0 70px rgba(255,120,180,.55),
+    0 0 130px rgba(255,50,130,.25);
+  animation:moon 4s ease-in-out infinite alternate;
+}
+
+@keyframes moon{
+  from{transform:translateX(-50%) scale(.95)}
+  to{transform:translateX(-50%) scale(1.05)}
+}
+
+/* YILDIZLAR */
+.stars{
+  position:absolute;
+  inset:0;
+}
+
+.star{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  box-shadow:0 0 8px white;
+  animation:twinkle 2s infinite ease-in-out;
+}
+
+@keyframes twinkle{
+  0%,100%{opacity:.15;transform:scale(.5)}
+  50%{opacity:1;transform:scale(1.8)}
+}
+
+/* MERKEZ KALP */
+.heart{
+  position:absolute;
+  left:50%;
+  top:53%;
+  width:115px;
+  height:115px;
+  transform:translate(-50%,-50%) rotate(-45deg);
+  background:linear-gradient(145deg,#ff174f,#79001f);
+  border-radius:18px;
+  box-shadow:
+    0 0 20px #ff174f,
+    0 0 60px rgba(255,0,80,.75),
+    0 0 120px rgba(255,0,80,.35);
+  animation:
+    heartbeat 1.5s infinite ease-in-out,
+    floating 4s infinite ease-in-out;
+  z-index:5;
+}
+
+.heart:before,
+.heart:after{
+  content:"";
+  position:absolute;
+  width:115px;
+  height:115px;
+  border-radius:50%;
+  background:inherit;
+}
+
+.heart:before{top:-57px;left:0}
+.heart:after{left:57px;top:0}
+
+@keyframes heartbeat{
+  0%,100%{scale:1}
+  50%{scale:1.12}
+}
+
+@keyframes floating{
+  0%,100%{margin-top:0}
+  50%{margin-top:-12px}
+}
+
+/* HALKA */
+.ring{
+  position:absolute;
+  left:50%;
+  top:53%;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(255,70,150,.55);
+  border-radius:50%;
+  animation:expand 3s infinite ease-out;
+}
+
+.ring:nth-child(1){width:150px;height:150px}
+.ring:nth-child(2){width:150px;height:150px;animation-delay:1s}
+.ring:nth-child(3){width:150px;height:150px;animation-delay:2s}
+
+@keyframes expand{
+  0%{opacity:.8;scale:.5}
+  100%{opacity:0;scale:2.7}
+}
+
+/* UÇAN PARÇACIKLAR */
+.particle{
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ff4778;
+  box-shadow:0 0 12px #ff4778;
+  animation:rise linear infinite;
+}
+
+@keyframes rise{
+  from{
+    transform:translateY(110vh) scale(.2);
+    opacity:0;
+  }
+  15%{opacity:1}
+  85%{opacity:1}
+  to{
+    transform:translateY(-20vh) translateX(var(--x)) scale(1.4);
+    opacity:0;
+  }
+}
+
+/* KALP PARÇACIKLARI */
+.love{
+  position:absolute;
+  font-size:18px;
+  pointer-events:none;
+  animation:love 2.5s ease-out forwards;
+  filter:drop-shadow(0 0 8px #ff245e);
+}
+
+@keyframes love{
+  0%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(.2) rotate(0);
+  }
+  100%{
+    opacity:0;
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(1.5)
+      rotate(var(--r));
+  }
+}
+
+/* DOKUNMA PARLAMASI */
+.flash{
+  position:absolute;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  pointer-events:none;
+  background:white;
+  box-shadow:
+    0 0 20px white,
+    0 0 50px #ff2f6d,
+    0 0 100px #ff2f6d;
+  animation:flash .7s ease-out forwards;
+}
+
+@keyframes flash{
+  from{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(.1);
+  }
+  to{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(5);
+  }
+}
+
+/* KAYAN IŞIK */
+.shooting{
+  position:absolute;
+  width:100px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,#fff,#ff5b91,transparent);
+  box-shadow:0 0 10px #ff4d88;
+  transform:rotate(-35deg);
+  animation:shoot 2s linear forwards;
+}
+
+@keyframes shoot{
+  from{
+    opacity:0;
+    transform:translate(0,0) rotate(-35deg);
+  }
+  10%{opacity:1}
+  to{
+    opacity:0;
+    transform:translate(-500px,500px) rotate(-35deg);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<div class="moon"></div>
+
+<div class="ring"></div>
+<div class="ring"></div>
+<div class="ring"></div>
+
+<div class="heart"></div>
+
+<script>
+
+/* YILDIZLAR */
+const stars=document.getElementById("stars");
+
+for(let i=0;i<130;i++){
+  const s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"%";
+  s.style.top=Math.random()*100+"%";
+  s.style.animationDelay=Math.random()*3+"s";
+  s.style.animationDuration=(1+Math.random()*3)+"s";
+  stars.appendChild(s);
+}
+
+/* PARÇACIKLAR */
+for(let i=0;i<35;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"%";
+  p.style.animationDuration=(5+Math.random()*7)+"s";
+  p.style.animationDelay=Math.random()*7+"s";
+  p.style.setProperty("--x",(Math.random()*250-125)+"px");
+  document.body.appendChild(p);
+}
+
+/* DOKUNMA */
+document.addEventListener("pointerdown",e=>{
+
+  /* PARLAMA */
+  const f=document.createElement("div");
+  f.className="flash";
+  f.style.left=e.clientX+"px";
+  f.style.top=e.clientY+"px";
+  document.body.appendChild(f);
+
+  setTimeout(()=>f.remove(),700);
+
+  /* KALPLER */
+  for(let i=0;i<12;i++){
+
+    const l=document.createElement("div");
+    l.className="love";
+    l.innerHTML=["♥","❤","♡","✦"][Math.floor(Math.random()*4)];
+
+    l.style.left=e.clientX+"px";
+    l.style.top=e.clientY+"px";
+
+    l.style.setProperty("--x",(Math.random()*260-130)+"px");
+    l.style.setProperty("--y",(Math.random()*260-180)+"px");
+    l.style.setProperty("--r",(Math.random()*360)+"deg");
+
+    l.style.animationDelay=(Math.random()*.12)+"s";
+
+    document.body.appendChild(l);
+
+    setTimeout(()=>l.remove(),2700);
+  }
+
+  /* METEOR */
+  if(Math.random()>.35){
+    const sh=document.createElement("div");
+    sh.className="shooting";
+
+    sh.style.left=(Math.random()*100+20)+"%";
+    sh.style.top=(Math.random()*45)+"%";
+
+    document.body.appendChild(sh);
+
+    setTimeout(()=>sh.remove(),2000);
+  }
+
+});
+
+/* OTOMATİK METEOR */
+setInterval(()=>{
+  const sh=document.createElement("div");
+  sh.className="shooting";
+  sh.style.left=(70+Math.random()*35)+"%";
+  sh.style.top=(Math.random()*35)+"%";
+  document.body.appendChild(sh);
+  setTimeout(()=>sh.remove(),2000);
+},3500);
+
+</script>
+
+</body>
+</html>
